@@ -1,28 +1,12 @@
 ---
-- name: Stop Azure Windows VM
+- name: Stop Azure Linux VM
   hosts: localhost
-  gather_facts: no
   tasks:
-    - name: Ensure Azure CLI is installed
-      win_command: |
-        choco install azure-cli -y
-      changed_when: false
-      when: "'win' in ansible_hostname"
-
-    - name: Login to Azure
-      win_command: |
-        az login --service-principal --username "40e41a68-8adc-4f3d-960f-622e4f45ebdc" --password "D3b8Q~7zvaynTNp363UGvSgSlTibKKmmhyIfva37" --tenant "6f9050e8-d3aa-4f5c-a1c9-2e5e74faaec6"
-      register: azure_login
-      changed_when: false
-      when: "'win' in ansible_hostname"
-
-    - name: Stop Azure VM
-      win_shell: |
-        Stop-AzVM -ResourceGroupName "vmss-rg" -Name "vm01" -Force
-      environment:
-        AZURE_CLIENT_ID: "your-client-id"
-        AZURE_CLIENT_SECRET: "your-client-secret"
-        AZURE_SUBSCRIPTION_ID: "019c5936-76b3-4ee0-b912-cdf58daf9936"
-        AZURE_TENANT: "6f9050e8-d3aa-4f5c-a1c9-2e5e74faaec6"
-      changed_when: false
-      when: "'win' in ansible_hostname"
+    - name: Stop the Azure Linux VM
+      azure_rm_virtualmachine:
+        name: "vm01"
+        resource_group: "vmss-rg"
+        state: "absent"  # Use "absent" to stop the VM
+        admin_username: "kantin"
+        ssh_password: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC1Syutlu4EJ3YllFdFWomJDbPFmm61IeOFCyD2BElFAx45yZeyQfuStlTEjDc5S0ktwCz2c3xj31By7CKOoWt1DpXvYYknWjhCGDWQdDGXe816dDBbmIxrOlDOEp+47LROCUueF365gGKSi0AOFZFh+FsITyKWUm77MSbidTjEWDOCv3XGC1fHD/U/lZwe1nTA8Af/iSj2hif8vxD0h+/xF/eflp1mMCHd/CRKgndTUT9H5KB/+0l+scld0jGc9q2Hvi/R79bPddqns5xPOmpiFjpHe8P4Ea/bLedFNZvKvUaBXPN/xzDP5iCqiEWun2nBmsr44sbydIDzP9hmq8iDLJhyrpKtZvscOY/fRzMJPU7z9y/uyu3o4kc2wDqZnK4dsUYBfQFqkisk8zLXobJxdQiaSKl/zGNl+rKott8fuSs73ljNYcD6wzh1hcmStFT/685RYzLxPAXuFpS3jkHE2hk7WKXZKUKkDwwGTWmDewGv97XsOc/538juKAZ9PwvV+X/2i8t6QeyviMLE6yfYBl1YChRv/uZyaip5Cy3CkwQePKhEgDhFNQ2OkAmN6V+OsDKBFnYrFTnFvADHfYlmsMtSOZDm2hpkRFi9VMi1BPe5Zw8NgEVnRYUn0wyL3To/2jeoQJ0DtYJ/UYJS7swOM2ZBylSLqNUVfQVCjtKPmQ== kantinstephane@yahoo.com"  # You can also use ansible_ssh_pass if using SSH keys
+      delegate_to: localhost
