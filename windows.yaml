@@ -10,7 +10,7 @@
     - name: Install Azure CLI if not found
       ansible.builtin.command: curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
       when: "'az' not in azure_cli_check.stdout"
-      become: yes  # Use become to run as sudo, modify as needed for your setup
+      become: no  # Use become to run as sudo, modify as needed for your setup
 
     - name: Stop the Azure Linux VM
       ansible.builtin.shell: az vm stop --name vm01 --resource-group vmss-rg --no-wait
