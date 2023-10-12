@@ -11,7 +11,7 @@
 
     - name: Login to Azure
       win_command: |
-        az login --service-principal --username 40e41a68-8adc-4f3d-960f-622e4f45ebdc" --password "D3b8Q~7zvaynTNp363UGvSgSlTibKKmmhyIfva37" --tenant "6f9050e8-d3aa-4f5c-a1c9-2e5e74faaec6"
+        az login --service-principal --username "40e41a68-8adc-4f3d-960f-622e4f45ebdc" --password "D3b8Q~7zvaynTNp363UGvSgSlTibKKmmhyIfva37" --tenant "6f9050e8-d3aa-4f5c-a1c9-2e5e74faaec6"
       register: azure_login
       changed_when: false
       when: ansible_os_family == "Windows"
