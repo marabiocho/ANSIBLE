@@ -1,0 +1,12 @@
+- name: Stop Azure VM
+  hosts: localhost
+  tasks:
+  - name: Stop the Azure VM
+    azure_rm_virtualmachine:
+      name: "vm01"
+      resource_group: "vmss-rg"
+      state: "stopped"
+      login_profile:
+        username: "kantin"
+        password: "Marabiocho10@"
+    delegate_to: localhost
