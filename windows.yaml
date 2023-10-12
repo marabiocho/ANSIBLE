@@ -5,7 +5,7 @@
     azure_rm_virtualmachine:
       name: "vm01"
       resource_group: "vmss-rg"
-      state: "stopped"
+      state: "absent"
       login_profile:
         username: "kantin"
         password: "Marabiocho10@"
