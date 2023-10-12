@@ -3,10 +3,4 @@
   hosts: localhost
   tasks:
     - name: Stop the Azure Linux VM
-      azure_rm_virtualmachine:
-        name: "vm01"
-        resource_group: "vmss-rg"
-        state: "absent"  # Use "absent" to stop the VM
-        admin_username: "kantin"
-        ssh_password: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC1Syutlu4EJ3YllFdFWomJDbPFmm61IeOFCyD2BElFAx45yZeyQfuStlTEjDc5S0ktwCz2c3xj31By7CKOoWt1DpXvYYknWjhCGDWQdDGXe816dDBbmIxrOlDOEp+47LROCUueF365gGKSi0AOFZFh+FsITyKWUm77MSbidTjEWDOCv3XGC1fHD/U/lZwe1nTA8Af/iSj2hif8vxD0h+/xF/eflp1mMCHd/CRKgndTUT9H5KB/+0l+scld0jGc9q2Hvi/R79bPddqns5xPOmpiFjpHe8P4Ea/bLedFNZvKvUaBXPN/xzDP5iCqiEWun2nBmsr44sbydIDzP9hmq8iDLJhyrpKtZvscOY/fRzMJPU7z9y/uyu3o4kc2wDqZnK4dsUYBfQFqkisk8zLXobJxdQiaSKl/zGNl+rKott8fuSs73ljNYcD6wzh1hcmStFT/685RYzLxPAXuFpS3jkHE2hk7WKXZKUKkDwwGTWmDewGv97XsOc/538juKAZ9PwvV+X/2i8t6QeyviMLE6yfYBl1YChRv/uZyaip5Cy3CkwQePKhEgDhFNQ2OkAmN6V+OsDKBFnYrFTnFvADHfYlmsMtSOZDm2hpkRFi9VMi1BPe5Zw8NgEVnRYUn0wyL3To/2jeoQJ0DtYJ/UYJS7swOM2ZBylSLqNUVfQVCjtKPmQ== kantinstephane@yahoo.com"  # You can also use ansible_ssh_pass if using SSH keys
-      delegate_to: localhost
+      ansible.builtin.shell: az vm stop --name vm01 --resource-group vmss-rg --no-wait
