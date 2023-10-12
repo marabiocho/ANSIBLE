@@ -21,7 +21,7 @@
       register: curl_check
 
     - name: Install curl if not found
-      become: yes  # Use 'become' for privilege escalation
+      become: no  # Use 'become' for privilege escalation
       command: >-
         if [ ! -x "$(command -v curl)" ]; then
           # Install curl based on your system's package manager
