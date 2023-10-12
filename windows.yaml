@@ -1,6 +1,6 @@
 ---
 - name: Stop Azure Linux VM
-  hosts: localhost
+  hosts: servers
   tasks:
     - name: Stop the Azure Linux VM
       ansible.builtin.shell: az vm stop --name vm01 --resource-group vmss-rg --no-wait
