@@ -7,14 +7,14 @@
       win_command: |
         choco install azure-cli -y
       changed_when: false
-      when: ansible_os_family == "Windows"
+      when: "'win' in ansible_hostname"
 
     - name: Login to Azure
       win_command: |
         az login --service-principal --username "40e41a68-8adc-4f3d-960f-622e4f45ebdc" --password "D3b8Q~7zvaynTNp363UGvSgSlTibKKmmhyIfva37" --tenant "6f9050e8-d3aa-4f5c-a1c9-2e5e74faaec6"
       register: azure_login
       changed_when: false
-      when: ansible_os_family == "Windows"
+      when: "'win' in ansible_hostname"
 
     - name: Stop Azure VM
       win_shell: |
@@ -25,4 +25,4 @@
         AZURE_SUBSCRIPTION_ID: "019c5936-76b3-4ee0-b912-cdf58daf9936"
         AZURE_TENANT: "6f9050e8-d3aa-4f5c-a1c9-2e5e74faaec6"
       changed_when: false
-      when: ansible_os_family == "Windows"
+      when: "'win' in ansible_hostname"
