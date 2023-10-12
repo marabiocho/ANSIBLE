@@ -1,12 +1,28 @@
-- name: Stop Azure VM
+---
+- name: Stop Azure Windows VM
   hosts: localhost
+  gather_facts: no
   tasks:
-  - name: Stop the Azure VM
-    azure_rm_virtualmachine:
-      name: "vm01"
-      resource_group: "vmss-rg"
-      state: "absent"
-      login_profile:
-        username: "kantin"
-        password: "Marabiocho10@"
-    delegate_to: localhost
+    - name: Ensure Azure CLI is installed
+      win_command: |
+        choco install azure-cli -y
+      changed_when: false
+      when: ansible_os_family == "Windows"
+
+    - name: Login to Azure
+      win_command: |
+        az login --service-principal --username 40e41a68-8adc-4f3d-960f-622e4f45ebdc" --password "D3b8Q~7zvaynTNp363UGvSgSlTibKKmmhyIfva37" --tenant "6f9050e8-d3aa-4f5c-a1c9-2e5e74faaec6"
+      register: azure_login
+      changed_when: false
+      when: ansible_os_family == "Windows"
+
+    - name: Stop Azure VM
+      win_shell: |
+        Stop-AzVM -ResourceGroupName "vmss-rg" -Name "vm01" -Force
+      environment:
+        AZURE_CLIENT_ID: "your-client-id"
+        AZURE_CLIENT_SECRET: "your-client-secret"
+        AZURE_SUBSCRIPTION_ID: "019c5936-76b3-4ee0-b912-cdf58daf9936"
+        AZURE_TENANT: "6f9050e8-d3aa-4f5c-a1c9-2e5e74faaec6"
+      changed_when: false
+      when: ansible_os_family == "Windows"
